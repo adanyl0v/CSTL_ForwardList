@@ -114,7 +114,8 @@ include(CTest)
 enable_testing()
 
 set(CSTL_FORWARD_LIST_TEST_LIST
-    ForwardListCreation
+    TestCreation
+    TestCapacity
     TestSwap
 )
 
