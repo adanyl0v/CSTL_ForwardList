@@ -100,6 +100,12 @@ To build and install the library, you must have `CMake` at least version 3.5 ins
    find_package(CSTL_ForwardList REQUIRED)
    link_libraries(CSTL_ForwardList::CSTL_ForwardList)
    ```
+   
+> [!IMPORTANT]
+> For correct work with the library, you will have to install some additional libraries. 
+> The installation process remains the same. Here are links to their GitHub repositories:
+> * [CSTL_Exception](https://github.com/adanyl0v/CSTL_Exception.git)
+> * [CSTL_SmartPointer](https://github.com/adanyl0v/CSTL_SmartPointer.git)
 
 ## <a name="contributing">Contributing</a>
 
