@@ -105,8 +105,8 @@ install(
     DESTINATION "${CSTL_FORWARD_LIST_INSTALL_CONFIG_DIR}"
 )
 
-# Testsing
-if (DEFINED CSTL_FORWARD_LIST_NO_TESTS)
+# Testing
+if (NOT DEFINED BUILD_TESTS)
     return()
 endif ()
 
