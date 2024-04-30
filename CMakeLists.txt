@@ -105,7 +105,7 @@ install(
     DESTINATION "${CSTL_FORWARD_LIST_INSTALL_CONFIG_DIR}"
 )
 
-# Testing
-if (DEFINED BUILD_TESTS)
+option(BUILD_TESTS "" STRING)
+if (BUILD_TESTS)
     include(${CMAKE_CURRENT_LIST_DIR}/modules/cmake/tests.cmake)
 endif ()

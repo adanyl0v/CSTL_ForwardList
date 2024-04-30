@@ -80,21 +80,13 @@ To build and install the library, you must have `CMake` at least version 3.5 ins
    ``` sh
    git clone git@github.com:adanyl0v/CSTL_ForwardList.git
    ```
-2. Go to the directory where the cloned repository is located
-    * Enter the configuration command
-      ``` sh
-      # Set BUILD_SHARED_LIBS on TRUE to build dynamic library and FALSE to build static
-      # You can also add -DBUILD_TESTS to build tests
-      cmake -DBUILD_SHARED_LIBS=TRUE -DCMAKE_PREFIX_PATH="~/installPath/" -G "Your Generator" -B "~/buildPath/" -S . 
-      ```
-    * Enter the build command
-      ``` sh
-      cmake --build "~/buildPath/" --config YourConfig
-      ```
-    * Enter the installation command (administrator privileges may be required)
-      ``` sh
-      cmake --install "~/buildPath/" --config YourConfig
-      ```
+2. Install the library:
+    * Go to the directory where the cloned repository is located
+    * Run the configuration script `scripts/configure.sh`
+    * Run the build script `scripts/build.sh`
+    * Run the installation script `scripts/install.sh` (administrator privileges may be required)
+> [!NOTE]
+> Before running any script, it's recommended to read it for a better understanding of the configuration, build and installation processes 
 3. Link the library to your project
    ``` cmake
    find_package(CSTL_ForwardList REQUIRED)
