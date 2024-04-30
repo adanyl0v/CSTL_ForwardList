@@ -10,6 +10,14 @@
 
 typedef struct CSTL_ForwardList CSTL_ForwardList;
 
+/**
+ * \warning Do not manually overwrite the internal values of the structure
+ * */
+struct CSTL_ForwardListIterator {
+    CSTL_ForwardList *fList;
+    void *node;
+};
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -56,7 +64,6 @@ extern "C" {
 
 #pragma region CSTL_ForwardListAlgorithms
     extern DECLSPEC void CSTLCALL CSTL_ForEachInForwardListF(CSTL_ForwardList *fList, void (*f)(CSTL_ForwardListIterator *));
-#pragma endregion
 
 #ifndef CSTL_ForEachInForwardList
     /**
@@ -80,6 +87,8 @@ extern "C" {
             } while (!CSTL_IsForwardListIteratorEquals(&__itBegin, &__itEnd));  \
         } while (0)
 #endif /* CSTL_ForEachInForwardList */
+
+#pragma endregion
 
 #ifdef __cplusplus
 }

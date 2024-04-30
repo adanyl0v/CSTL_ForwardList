@@ -3,7 +3,7 @@ if(.. STREQUAL ${CMAKE_CURRENT_BINARY_DIR})
 endif()
 
 cmake_minimum_required(VERSION 3.5)
-project(CSTL_ForwardList VERSION 1.0.0 DESCRIPTION "A basic implementation of std::forward_list<T> from C++ STL in C" LANGUAGES C)
+project(CSTL_ForwardList VERSION 1.1.0 DESCRIPTION "A basic implementation of std::forward_list<T> from C++ STL in C" LANGUAGES C)
 
 set(CMAKE_C_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN TRUE)

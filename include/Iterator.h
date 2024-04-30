@@ -6,11 +6,7 @@
 
 #include <CSTL_SmartPointer/SmartPointer.h>
 
-// !DO NOT OVERWRITE
-typedef struct CSTL_ForwardListIterator {
-    void *container; // container
-    void *p; // pointer to an element of the container
-} CSTL_ForwardListIterator;
+typedef struct CSTL_ForwardListIterator CSTL_ForwardListIterator;
 
 #ifdef __cplusplus
 extern "C" {
