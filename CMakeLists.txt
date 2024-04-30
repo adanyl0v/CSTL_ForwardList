@@ -106,38 +106,6 @@ install(
 )
 
 # Testing
-if (NOT DEFINED BUILD_TESTS)
-    return()
+if (DEFINED BUILD_TESTS)
+    include(${CMAKE_CURRENT_LIST_DIR}/modules/cmake/tests.cmake)
 endif ()
-
-include(CTest)
-enable_testing()
-
-set(CSTL_FORWARD_LIST_TEST_LIST
-    TestCreation
-    TestCapacity
-    TestSwap
-)
-
-foreach (test ${CSTL_FORWARD_LIST_TEST_LIST})
-    add_executable(${test} tests/${test}.c)
-    target_link_libraries(${test} PRIVATE CSTL_ForwardList)
-
-    add_test(
-        NAME ${test}
-        COMMAND $<TARGET_FILE:${test}>
-    )
-
-    set(MEMCHECK_ARGS
-        --leak-check=full
-        --track-origins=yes
-        --show-leak-kinds=all
-        --undef-value-errors=yes
-        $<TARGET_FILE:${test}>
-    )
-
-    add_test(
-        NAME MemCheck${test}
-        COMMAND valgrind ${MEMCHECK_ARGS}
-    )
-endforeach ()

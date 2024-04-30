@@ -3,7 +3,8 @@
 .vscode/
 
 build*/
-modules/
+modules/cmake/*Config*.cmake
+modules/cmake/*Targets*.cmake
 
 # Prerequisites
 *.d
