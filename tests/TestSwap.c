@@ -2,17 +2,14 @@
 
 void PushToLists(CSTL_ForwardList *fList1, CSTL_ForwardList *fList2) {
     const char dSetMax = 3; // Should be in range [0 < N < 10]
-    CSTL_SmartPtr *dSet1[dSetMax], *dSet2[dSetMax];
     for (unsigned long i = 0; i < (unsigned long)dSetMax; i++) {
         /* _CSTL_SmartPtrMalloc() can't return NULL, it must throw an exception */
         int *d1 = (int *)_CSTL_SmartPtrMalloc(sizeof(int));
         int *d2 = (int *)_CSTL_SmartPtrMalloc(sizeof(int));
         *d1 = (int)(i + 1) * 10; // 10, 20, 30, ...
         *d2 = (int)(i + 1) * 100;// 100, 200, 300, ...
-        dSet1[i] = CSTL_AllocateSmartPtr(d1);
-        dSet2[i] = CSTL_AllocateSmartPtr(d2);
-        CSTL_PushFrontToFrontList(fList1, dSet1[i]);
-        CSTL_PushFrontToFrontList(fList2, dSet2[i]);
+        CSTL_PushFrontToFrontList(fList1, CSTL_AllocateSmartPtr(d1));
+        CSTL_PushFrontToFrontList(fList2, CSTL_AllocateSmartPtr(d2));
     }
 }
 
