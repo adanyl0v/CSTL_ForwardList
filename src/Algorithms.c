@@ -1,13 +1,13 @@
 #include "Afx.h"
 
-void CSTL_ForEachInForwardListF(CSTL_ForwardList *fList, void (*f)(CSTL_ForwardListIterator *)) {
+void CSTL_ForEachInForwardListF(CSTL_ForwardList *fList, void (*f)(CSTL_Iterator *)) {
     ThrowIfNullNoReturn(Warning, fList)
     ThrowIfNullNoReturn(Warning, f)
 
-    CSTL_ForwardListIterator iterator = fList->begin;
+    CSTL_Iterator iterator = fList->begin;
     do {
         f(&iterator);
-        CSTL_IterateNextInForwardList(&iterator);
-    } while (!CSTL_IsForwardListIteratorEquals(&iterator, &fList->end));
+        CSTL_IterateForward(CSTL_ForwardList, &iterator);
+    } while (!CSTL_IsIteratorEquals(CSTL_ForwardList, &iterator, &fList->end));
 }
 

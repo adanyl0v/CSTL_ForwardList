@@ -1,32 +1,26 @@
-#pragma once
 #ifndef CSTL_FORWARD_LIST_H
 #define CSTL_FORWARD_LIST_H
 
 #include "BeginCode.h"
-#include "Iterator.h"
 
 #include <CSTL_Exception/Exception.h>
 #include <CSTL_SmartPointer/SmartPointer.h>
+#include <CSTL_Iterator/Iterator.h>
 
 typedef struct CSTL_ForwardList CSTL_ForwardList;
-
-/**
- * \warning Do not manually overwrite the internal values of the structure
- * */
-struct CSTL_ForwardListIterator {
-    CSTL_ForwardList *fList;
-    void *node;
-};
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #pragma region CSTL_ForwardListIterator
-    extern DECLSPEC void CSTLCALL CSTL_IterateNextInForwardList(CSTL_ForwardListIterator *iterator);
+    extern void _CSTL_FDECL_Iterator_CSTL_ForwardList_iterateForward(CSTL_Iterator *iterator) DECLSPEC CSTLCALL;
 
-    extern DECLSPEC CSTL_ForwardListIterator CSTLCALL CSTL_GetForwardListBegin(const CSTL_ForwardList *fList);
-    extern DECLSPEC CSTL_ForwardListIterator CSTLCALL CSTL_GetForwardListEnd(const CSTL_ForwardList *fList);
+    extern CSTL_SmartPtr *_CSTL_FDECL_Iterator_CSTL_ForwardList_getData(const CSTL_Iterator *iterator) DECLSPEC CSTLCALL;
+    extern void _CSTL_FDECL_Iterator_CSTL_ForwardList_setData(CSTL_Iterator *iterator, CSTL_SmartPtr *data) DECLSPEC CSTLCALL;
+
+    extern CSTL_Iterator CSTL_GetForwardListBegin(const CSTL_ForwardList *fList) DECLSPEC CSTLCALL;
+    extern CSTL_Iterator CSTL_GetForwardListEnd(const CSTL_ForwardList *fList) DECLSPEC CSTLCALL;
 
 #ifndef CSTL_GetForwardListBeginC
     /**
@@ -45,25 +39,25 @@ extern "C" {
 #pragma endregion
 
 #pragma region CSTL_ForwardList
-    extern DECLSPEC CSTL_ForwardList * CSTLCALL CSTL_CreateForwardList(void);
-    extern DECLSPEC void CSTLCALL CSTL_DestroyForwardList(CSTL_ForwardList *fList);
+    extern CSTL_ForwardList * CSTL_CreateForwardList(void) DECLSPEC CSTLCALL;
+    extern void CSTL_DestroyForwardList(CSTL_ForwardList *fList) DECLSPEC CSTLCALL;
 
-    extern DECLSPEC CSTL_SmartPtr * CSTLCALL CSTL_GetForwardListFront(const CSTL_ForwardList *fList);
-    extern DECLSPEC CSTL_SmartPtr * CSTLCALL CSTL_GetForwardListBack(const CSTL_ForwardList *fList);
+    extern CSTL_SmartPtr *CSTL_GetForwardListFront(const CSTL_ForwardList *fList) DECLSPEC CSTLCALL;
+    extern CSTL_SmartPtr *CSTL_GetForwardListBack(const CSTL_ForwardList *fList) DECLSPEC CSTLCALL;
 
-    extern DECLSPEC CSTL_Bool CSTLCALL CSTL_IsForwardListEmpty(const CSTL_ForwardList *fList);
-    extern DECLSPEC size_t CSTLCALL CSTL_GetForwardListSize(const CSTL_ForwardList *fList);
+    extern CSTL_Bool CSTL_IsForwardListEmpty(const CSTL_ForwardList *fList) DECLSPEC CSTLCALL;
+    extern size_t CSTL_GetForwardListSize(const CSTL_ForwardList *fList) DECLSPEC CSTLCALL;
 
-    extern DECLSPEC void CSTLCALL CSTL_SwapForwardList(CSTL_ForwardList *fList, CSTL_ForwardList *other);
-    extern DECLSPEC void CSTLCALL CSTL_ClearForwardLIst(CSTL_ForwardList *fList);
-    extern DECLSPEC void CSTLCALL CSTL_PushFrontToFrontList(CSTL_ForwardList *fList, CSTL_SmartPtr *data);
-    extern DECLSPEC void CSTLCALL CSTL_PopFrontToFrontList(CSTL_ForwardList *fList);
-    extern DECLSPEC void CSTLCALL CSTL_InsertAfterToForwardList(CSTL_ForwardList *fList, size_t pos, CSTL_SmartPtr *data);
-    extern DECLSPEC void CSTLCALL CSTL_EraseAfterFromForwardList(CSTL_ForwardList *fList, size_t pos);
+    extern void CSTL_SwapForwardList(CSTL_ForwardList *fList, CSTL_ForwardList *other) DECLSPEC CSTLCALL;
+    extern void CSTL_ClearForwardLIst(CSTL_ForwardList *fList) DECLSPEC CSTLCALL;
+    extern void CSTL_PushFrontToFrontList(CSTL_ForwardList *fList, CSTL_SmartPtr *data) DECLSPEC CSTLCALL;
+    extern void CSTL_PopFrontToFrontList(CSTL_ForwardList *fList) DECLSPEC CSTLCALL;
+    extern void CSTL_InsertAfterToForwardList(CSTL_ForwardList *fList, size_t pos, CSTL_SmartPtr *data) DECLSPEC CSTLCALL;
+    extern void CSTL_EraseAfterFromForwardList(CSTL_ForwardList *fList, size_t pos) DECLSPEC CSTLCALL;
 #pragma endregion
 
 #pragma region CSTL_ForwardListAlgorithms
-    extern DECLSPEC void CSTLCALL CSTL_ForEachInForwardListF(CSTL_ForwardList *fList, void (*f)(CSTL_ForwardListIterator *));
+    extern void CSTL_ForEachInForwardListF(CSTL_ForwardList *fList, void (*f)(CSTL_Iterator *)) DECLSPEC CSTLCALL;
 
 #ifndef CSTL_ForEachInForwardList
     /**
@@ -73,18 +67,18 @@ extern "C" {
      * \param VN iteration variable name
      * \param EXPR expression to apply
      * */
-    #define CSTL_ForEachInForwardList(BEGIN, END, VT, VN, EXPR)                 \
-        do {                                                                    \
-            CSTL_ForwardListIterator __itBegin = BEGIN;                         \
-            CSTL_ForwardListIterator __itEnd = END;                             \
-            CSTL_SmartPtr *__itSp = NULL;                                       \
-            VT *VN = NULL;                                                      \
-            do {                                                                \
-                __itSp = CSTL_GetForwardListIteratorData(&__itBegin);           \
-                VN = (VT *)CSTL_GetSmartPtrData(__itSp);                        \
-                EXPR;                                                           \
-                CSTL_IterateNextInForwardList(&__itBegin);                      \
-            } while (!CSTL_IsForwardListIteratorEquals(&__itBegin, &__itEnd));  \
+    #define CSTL_ForEachInForwardList(BEGIN, END, VT, VN, EXPR)                         \
+        do {                                                                            \
+            CSTL_Iterator __itBegin = BEGIN;                                            \
+            CSTL_Iterator __itEnd = END;                                                \
+            CSTL_SmartPtr *__itSp = NULL;                                               \
+            VT *VN = NULL;                                                              \
+            do {                                                                        \
+                __itSp = CSTL_GetIteratorData(CSTL_ForwardList, &__itBegin);            \
+                VN = (VT *)CSTL_GetSmartPtrData(__itSp);                                \
+                EXPR;                                                                   \
+                CSTL_IterateForward(CSTL_ForwardList, &__itBegin);                      \
+            } while (!CSTL_IsIteratorEquals(CSTL_ForwardList, &__itBegin, &__itEnd));   \
         } while (0)
 #endif /* CSTL_ForEachInForwardList */
 

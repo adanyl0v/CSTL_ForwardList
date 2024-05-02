@@ -1,7 +1,7 @@
 #include "Afx.h"
 
-void f(CSTL_ForwardListIterator *it) {
-    CSTL_SmartPtr *sp = CSTL_GetForwardListIteratorData(it);
+void f(CSTL_Iterator *it) {
+    CSTL_SmartPtr *sp = CSTL_GetIteratorData(CSTL_ForwardList, it);
     int *data = (int *)CSTL_GetSmartPtrData(sp);
     printf("Data: %p %d\n", (void *)data, data == NULL ? -1 : *data);
 }

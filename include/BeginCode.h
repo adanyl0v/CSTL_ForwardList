@@ -1,4 +1,3 @@
-#pragma once
 #ifndef CSTL_BEGIN_CODE_H
 #define CSTL_BEGIN_CODE_H
 

@@ -1,14 +1,14 @@
-#pragma once
 #ifndef CSTL_FORWARD_LIST_TYPE_H
 #define CSTL_FORWARD_LIST_TYPE_H
 
-#include "Node.h"
-#include "../include/Iterator.h"
+#include <CSTL_Iterator/Iterator.h>
+
+#include "Element.h"
 
 struct CSTL_ForwardList {
     size_t size;
-    CSTL_ForwardListIterator begin;
-    CSTL_ForwardListIterator end;
+    CSTL_Iterator begin;
+    CSTL_Iterator end;
 };
 
 #endif /* CSTL_FORWARD_LIST_TYPE_H */

@@ -1,4 +1,3 @@
-#pragma once
 #ifndef CSTL_FORWARD_LIST_AFX_H
 #define CSTL_FORWARD_LIST_AFX_H
 

@@ -3,7 +3,7 @@ if(.. STREQUAL ${CMAKE_CURRENT_BINARY_DIR})
 endif()
 
 cmake_minimum_required(VERSION 3.5)
-project(CSTL_ForwardList VERSION 1.1.1 DESCRIPTION "A basic implementation of std::forward_list<T> from C++ STL in C" LANGUAGES C)
+project(CSTL_ForwardList VERSION 2.0.0 DESCRIPTION "A basic implementation of std::forward_list<T> from C++ STL in C" LANGUAGES C)
 
 set(CMAKE_C_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN TRUE)
@@ -20,12 +20,11 @@ message(STATUS "* Current list dir: ${CMAKE_CURRENT_LIST_DIR}")
 
 set(CSTL_FORWARD_LIST_PUBLIC_HEADERS
     include/BeginCode.h
-    include/Iterator.h
     include/ForwardList.h
 )
 
 add_library(CSTL_ForwardList
-    src/Node.c
+    src/Element.c
     src/Iterator.c
     src/ForwardList.c
     src/Algorithms.c

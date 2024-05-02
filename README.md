@@ -98,6 +98,7 @@ To build and install the library, you must have `CMake` at least version 3.5 ins
 > The installation process remains the same. Here are links to their GitHub repositories:
 > * [CSTL_Exception](https://github.com/adanyl0v/CSTL_Exception.git)
 > * [CSTL_SmartPointer](https://github.com/adanyl0v/CSTL_SmartPointer.git)
+> * [CSTL_Iterator](https://github.com/adanyl0v/CSTL_Iterator.git)
 
 ## <a name="contributing">Contributing</a>
 
