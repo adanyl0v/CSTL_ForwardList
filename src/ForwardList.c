@@ -5,10 +5,10 @@ CSTL_ForwardList *CSTL_CreateForwardList(void) {
     ThrowIfFailedAlloc(Exception, NULL, newList);
 
     newList->size = 0;
-    newList->begin.fList = (void *)newList;
-    newList->begin.node = NULL;
-    newList->end.fList = (void *)newList;
-    newList->end.node = NULL; // End iterator must always be NULL
+    newList->begin.container = (void *)newList;
+    newList->begin.element = NULL;
+    newList->end.container = (void *)newList;
+    newList->end.element = NULL; // End iterator must always be NULL
     return newList;
 }
 
@@ -20,18 +20,18 @@ void CSTL_DestroyForwardList(CSTL_ForwardList *fList) {
 
 CSTL_SmartPtr *CSTL_GetForwardListFront(const CSTL_ForwardList *fList) {
     ThrowIfNull(Warning, NULL, fList);
-    if (fList->begin.node == NULL)
+    if (fList->begin.element == NULL)
         return NULL;
 
-    return ((CSTL_ForwardListNode *)fList->begin.node)->data;
+    return CSTL_GetIteratorData(CSTL_ForwardList, &fList->begin);
 }
 
 CSTL_SmartPtr *CSTL_GetForwardListBack(const CSTL_ForwardList *fList) {
     ThrowIfNull(Warning, NULL, fList);
-    if (fList->end.node == NULL)
+    if (fList->end.element == NULL)
         return NULL;
 
-    return ((CSTL_ForwardListNode *)fList->end.node)->data;
+    return CSTL_GetIteratorData(CSTL_ForwardList, &fList->begin);
 }
 
 CSTL_Bool CSTL_IsForwardListEmpty(const CSTL_ForwardList *fList) {
@@ -49,20 +49,20 @@ void CSTL_SwapForwardList(CSTL_ForwardList *fList, CSTL_ForwardList *other) {
     ThrowIfNullNoReturn(Warning, other);
 
     size_t fListSize = fList->size;
-    CSTL_ForwardListIterator fListHead = fList->begin;
-    CSTL_ForwardListIterator fListTail = fList->end;
+    CSTL_Iterator fListHead = fList->begin;
+    CSTL_Iterator fListTail = fList->end;
 
     fList->size = other->size;
-    fList->begin.fList = other->begin.fList;
-    fList->begin.node = other->begin.node;
-    fList->end.fList = other->end.fList;
-    fList->end.node = other->end.node;
+    fList->begin.container = other->begin.container;
+    fList->begin.element = other->begin.element;
+    fList->end.container = other->end.container;
+    fList->end.element = other->end.element;
 
     other->size = fListSize;
-    other->begin.fList = fListHead.fList;
-    other->begin.node = fListHead.node;
-    other->end.fList = fListTail.fList;
-    other->end.node = fListTail.node;
+    other->begin.container = fListHead.container;
+    other->begin.element = fListHead.element;
+    other->end.container = fListTail.container;
+    other->end.element = fListTail.element;
 }
 
 void CSTL_ClearForwardLIst(CSTL_ForwardList *fList) {
@@ -74,69 +74,69 @@ void CSTL_ClearForwardLIst(CSTL_ForwardList *fList) {
 void CSTL_PushFrontToFrontList(CSTL_ForwardList *fList, CSTL_SmartPtr *data) {
     ThrowIfNullNoReturn(Warning, fList);
 
-    CSTL_ForwardListNode *newNode = CSTL_CreateForwardListNode(data, (CSTL_ForwardListNode *)fList->begin.node);
-    if (newNode == NULL) // Unnecessary, because previous function must throw an exception, if failed to create a new node
+    CSTL_ForwardListElement *newElement = CSTL_CreateForwardListElement(data, (CSTL_ForwardListElement *) fList->begin.element);
+    if (newElement == NULL) // Unnecessary, because previous function must throw an exception, if failed to create a new node
         return;
 
-    fList->begin.node = (void *)newNode;
+    fList->begin.element = (void *)newElement;
     fList->size++;
 }
 
 void CSTL_PopFrontToFrontList(CSTL_ForwardList *fList) {
     ThrowIfNullNoReturn(Warning, fList);
 
-    CSTL_ForwardListNode *popNode = (CSTL_ForwardListNode *)fList->begin.node;
-    if (popNode == fList->end.node) // Must execute if the node to pop is NULL
+    CSTL_ForwardListElement *popNode = (CSTL_ForwardListElement *)fList->begin.element;
+    if (popNode == fList->end.element) // Must execute if the node to pop is NULL
         return;
 
-    fList->begin.node = (void *)popNode->next;
-    CSTL_DestroyForwardListNode(popNode);
+    fList->begin.element = (void *)popNode->next;
+    CSTL_DestroyForwardListElement(popNode);
     fList->size--;
 }
 
-CSTL_ForwardListNode *GetForwardListNodeAt(const CSTL_ForwardList *fList, size_t pos) {
+CSTL_ForwardListElement *GetForwardListNodeAt(const CSTL_ForwardList *fList, size_t pos) {
     ThrowIfNull(Warning, NULL, fList);
 
     if (pos == 0)
-        return fList->begin.node;
+        return fList->begin.element;
 
     ThrowIfOutOfRange(Exception, NULL, pos, fList->size);
 
-    CSTL_ForwardListIterator iterator = CSTL_GetForwardListBegin(fList);
+    CSTL_Iterator iterator = CSTL_GetForwardListBegin(fList);
     for (size_t i = 0; i < pos; i++)
-        CSTL_IterateNextInForwardList(&iterator);
-    return (CSTL_ForwardListNode *)iterator.node;
+        CSTL_IterateForward(CSTL_ForwardList, &iterator);
+    return (CSTL_ForwardListElement *)iterator.element;
 }
 
 void CSTL_InsertAfterToForwardList(CSTL_ForwardList *fList, size_t pos, CSTL_SmartPtr *data) {
     ThrowIfNullNoReturn(Warning, fList);
 
-    if (fList->begin.node == NULL && pos == 0) { // Must execute if the list is empty
-        fList->begin.node = (void *)CSTL_CreateForwardListNode(data, NULL);
+    if (fList->begin.element == NULL && pos == 0) { // Must execute if the list is empty
+        fList->begin.element = (void *) CSTL_CreateForwardListElement(data, NULL);
         fList->size++;
         return;
     }
 
     ThrowIfOutOfRangeNoReturn(Exception, pos, fList->size);
 
-    CSTL_ForwardListNode *nodeAfter = GetForwardListNodeAt(fList, pos);
+    CSTL_ForwardListElement *nodeAfter = GetForwardListNodeAt(fList, pos);
     if (nodeAfter == NULL) {
         CSTL_ThrowException(CSTL_NOT_FOUND, "failed to find the after node");
         return;
     }
 
-    CSTL_ForwardListNode *newNode = CSTL_CreateForwardListNode(data, nodeAfter->next);
-    if (newNode == NULL)
+    CSTL_ForwardListElement *newElement = CSTL_CreateForwardListElement(data, nodeAfter->next);
+    if (newElement == NULL)
         return;
 
-    nodeAfter->next = newNode;
+    nodeAfter->next = newElement;
     fList->size++;
 }
 
 void CSTL_EraseAfterFromForwardList(CSTL_ForwardList *fList, size_t pos) {
     ThrowIfNullNoReturn(Warning, fList);
 
-    CSTL_ForwardListNode *nodeAfter = GetForwardListNodeAt(fList, pos);
+    CSTL_ForwardListElement *nodeAfter = GetForwardListNodeAt(fList, pos);
     if (nodeAfter == NULL) {
         CSTL_ThrowException(CSTL_NOT_FOUND, "failed to find the after node");
         return;
@@ -145,8 +145,8 @@ void CSTL_EraseAfterFromForwardList(CSTL_ForwardList *fList, size_t pos) {
     if (nodeAfter->next == NULL)
         return;
 
-    CSTL_ForwardListNode *eraseNode = nodeAfter->next;
+    CSTL_ForwardListElement *eraseNode = nodeAfter->next;
     nodeAfter->next = eraseNode->next;
-    CSTL_DestroyForwardListNode(eraseNode);
+    CSTL_DestroyForwardListElement(eraseNode);
     fList->size--;
 }

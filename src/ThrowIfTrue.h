@@ -1,4 +1,3 @@
-#pragma once
 #ifndef CSTL_FORWARD_LIST_THROW_IF_TRUE_H
 #define CSTL_FORWARD_LIST_THROW_IF_TRUE_H
 
