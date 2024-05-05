@@ -16,7 +16,7 @@ int main(void) {
     CSTL_PushFrontToFrontList(fl, d2);
     CSTL_InsertAfterToForwardList(fl, 0, d3);
 
-    CSTL_ForEachInForwardListF(fl, f);
+    CSTL_ForeachInForwardListF(fl, f);
     CSTL_DestroyForwardList(fl);
     return 0;
 }

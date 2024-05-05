@@ -57,9 +57,9 @@ extern "C" {
 #pragma endregion
 
 #pragma region CSTL_ForwardListAlgorithms
-    extern void CSTL_ForEachInForwardListF(CSTL_ForwardList *fList, void (*f)(CSTL_Iterator *)) DECLSPEC CSTLCALL;
+    extern void CSTL_ForeachInForwardListF(CSTL_ForwardList *fList, void (*f)(CSTL_Iterator *begin, const CSTL_Iterator *end)) DECLSPEC CSTLCALL;
 
-#ifndef CSTL_ForEachInForwardList
+#ifndef CSTL_ForeachInForwardList
     /**
      * \param BEGIN begin iterator
      * \param END end iterator
@@ -67,7 +67,7 @@ extern "C" {
      * \param VN iteration variable name
      * \param EXPR expression to apply
      * */
-    #define CSTL_ForEachInForwardList(BEGIN, END, VT, VN, EXPR)                         \
+    #define CSTL_ForeachInForwardList(BEGIN, END, VT, VN, EXPR)                         \
         do {                                                                            \
             CSTL_Iterator __itBegin = BEGIN;                                            \
             CSTL_Iterator __itEnd = END;                                                \

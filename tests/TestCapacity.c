@@ -7,7 +7,7 @@ int main(void) {
     for (char i = 0; i < 5; i++)
         CSTL_PushFrontToFrontList(fl, data);
 
-    CSTL_ForEachInForwardList(CSTL_GetForwardListBegin(fl), CSTL_GetForwardListEnd(fl), char *, p, {
+    CSTL_ForeachInForwardList(CSTL_GetForwardListBegin(fl), CSTL_GetForwardListEnd(fl), char *, p, {
         printf("Data %p %s\n", (void *)p, p == NULL ? "": *p);
     });
 

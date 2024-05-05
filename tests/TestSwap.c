@@ -14,10 +14,10 @@ void PushToLists(CSTL_ForwardList *fList1, CSTL_ForwardList *fList2) {
 }
 
 void PrintLists(const CSTL_ForwardList *fList1, const CSTL_ForwardList *fList2) {
-    CSTL_ForEachInForwardList(CSTL_GetForwardListBegin(fList1), CSTL_GetForwardListEnd(fList1), int, i, {
+    CSTL_ForeachInForwardList(CSTL_GetForwardListBegin(fList1), CSTL_GetForwardListEnd(fList1), int, i, {
         printf("Data[1]: %p %d\n", (void *)i, i == NULL ? -1 : *i);
     });
-    CSTL_ForEachInForwardList(CSTL_GetForwardListBegin(fList2), CSTL_GetForwardListEnd(fList2), int, i, {
+    CSTL_ForeachInForwardList(CSTL_GetForwardListBegin(fList2), CSTL_GetForwardListEnd(fList2), int, i, {
         printf("Data[2]: %p %d\n", (void *)i, i == NULL ? -1 : *i);
     });
 }
